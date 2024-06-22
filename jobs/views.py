@@ -1,7 +1,8 @@
 from django.http import HttpResponse
 from django.shortcuts import render
 
-from jobs.models import Job,Applicant
+
+from jobs.models import Job,Application
 
 # Create your views here.
 def home(request):
