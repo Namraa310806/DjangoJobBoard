@@ -30,4 +30,4 @@ def form(request):
 
 def detail(request,slug):
     job=Job.objects.filter(Company=slug)
-    return render(request,'detail.html',{'job':job})
+    return render(request,'detail.html',{'job':job, 'slug':slug})
