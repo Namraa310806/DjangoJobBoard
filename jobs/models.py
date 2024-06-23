@@ -9,7 +9,7 @@ class Job(models.Model):
     Job_type = models.CharField(max_length=30)
 
     def __str__(self):
-        return self.Job_title   
+        return f"{self.Company}-{self.Job_title}"   
 
 
 
@@ -22,8 +22,7 @@ class Application(models.Model):
     cover_letter = models.TextField()
     linkedin = models.URLField(blank=True, null=True)
     submitted_at = models.DateTimeField(auto_now_add=True)
-    job = models.ForeignKey(Job, on_delete=models.CASCADE, default=1)  # Set a default value
-
+    job = models.IntegerField()
 
     def __str__(self):
         return f"{self.full_name} - {self.position}"
