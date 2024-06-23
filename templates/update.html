@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Job</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="/">Hiring</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link " aria-current="page" href="/">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/company">Companies</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+    </nav>
+    {% if success  %}
+    <div class="alert alert-success" role="alert">
+        Job Created Successfully
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+      {% endif %}
+    <div class="container mt-5">
+        <h2 class="mb-4">Update Job</h2>
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="company">Company Name:</label>
+                <input type="text" class="form-control" id="company" name="company" value="{{cmp}}" readonly>
+            </div>
+            <div class="form-group">
+                <label for="job_title">Job Title:</label>
+                <input type="text" class="form-control" id="job_title" name="job_title" value={{tit}}>
+            </div>
+            <div class="form-group">
+                <label for="skills_required">Skills Required:</label>
+                <textarea class="form-control" id="skills_required" name="skills_required" rows="4" value={{skills}}></textarea>
+            </div>
+            <div class="form-group">
+                <label for="job_type">Job Type:</label>
+                <input type="text" class="form-control" id="job_type" name="job_type" value={{type}}>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+</body>
+</html>

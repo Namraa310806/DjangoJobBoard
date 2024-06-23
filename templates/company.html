@@ -5,6 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create Job</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .btn a {
+            color: white;
+            text-decoration: none;
+        }
+    </style>
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -16,7 +22,7 @@
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
               <li class="nav-item">
-                <a class="nav-link " aria-current="page" href="/">Home</a>
+                <a class="nav-link" aria-current="page" href="/">Home</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="/company">Companies</a>
@@ -25,33 +31,24 @@
           </div>
         </div>
     </nav>
-    <h1 class="mb-4">Enter Company Name:</h1>
-    <form id="nameForm" class="mb-4">
-        <div class="mb-3">
-            <label for="name" class="form-label">Name:</label>
-            <input type="text" class="form-control" id="name" name="name" required>
-        </div>
-        <button type="submit" class="btn btn-primary"><a id="dynamicLink" href="#">Submit</a></button>
-    </form>
-    <div class="result">
-        <h1 id="displayName"></h1>
-        <a id="dynamicLink" href="#">Go to Your Profile</a>
+    <div class="container mt-5">
+        <form id="companyForm">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="company">Enter Company Name:</label>
+                <input type="text" class="form-control" id="company" name="company" required>
+            </div>
+            <button type="submit" class="btn btn-primary" id="submitBtn">Submit</button>
+        </form>
     </div>
-</div>
 
-<script>
-    function getInputText() {
-        return document.getElementById('name').value;
-    }
-
-    document.getElementById('nameForm').addEventListener('submit', function(event) {
-        event.preventDefault(); // Prevent form from submitting the traditional way
-        const name = getInputText();
-        document.getElementById('displayName').textContent = `Hello, ${name}!`;
-        const dynamicLink = document.getElementById('dynamicLink');
-        dynamicLink.href = `/profile/${name}`;
-        dynamicLink.textContent = `Go to ${name}'s Profile`;
-    });
-</script>
+    <script>
+        document.getElementById('companyForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent the form from submitting the traditional way
+            var companyName = document.getElementById('company').value;
+            var submitBtn = document.getElementById('submitBtn');
+            submitBtn.innerHTML = `<a href="/job/list/${companyName}" class="text-light">Submit</a>`;
+        });
+    </script>
 </body>
 </html>

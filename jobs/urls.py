@@ -9,6 +9,8 @@ urlpatterns = [
     path('jobs/<str:slug>',views.detail),
     path('job/create/',views.companyform),
     path('company/',views.company),
-    path('company/job/list/<str:cmp>',views.list)
+    path('job/list/<str:cmp>',views.list),
+    path('update/<int:no>/<str:cmp>/<str:tit>/<str:skill>/<str:type>/',views.update),
+    path('delete/',views.delete)
 
 ]

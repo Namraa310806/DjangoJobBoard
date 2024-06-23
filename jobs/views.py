@@ -49,4 +49,19 @@ def company(request):
 
 
 def list(request,cmp):
-    return render(request,"jobsCompany.html",{'cmp':cmp})
+    jobs=Job.objects.filter(Company=cmp)
+    return render(request,"jobsCompany.html",{'cmp':cmp,'job':jobs})
+
+def update(request,no,cmp,tit,skills,type):
+    if request.method=="POST":
+        job_instance = Job.objects.get(sno=no)
+        job_instance.Company=request.POST['company']
+        job_instance.Job_title=request.POST['job_title']
+        job_instance.Skills_required=request.POST['skills_required']
+        job_instance.Job_type=request.POST['job_type']
+        job_instance.save();
+    content={'no':no,'cmp':cmp,'tit':tit,'skills':skills,'type':type}
+    return render (request,"update.html",content)
+
+def delete(request):
+    return HttpResponse("deleted successfully")
