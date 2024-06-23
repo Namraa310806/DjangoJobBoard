@@ -1,5 +1,5 @@
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
 
 
 from jobs.models import Job,Application
@@ -63,5 +63,7 @@ def update(request,no,cmp,tit,skills,type):
     content={'no':no,'cmp':cmp,'tit':tit,'skills':skills,'type':type}
     return render (request,"update.html",content)
 
-def delete(request):
-    return HttpResponse("deleted successfully")
+def delete(request,no):
+    job = get_object_or_404(Job, sno=no)
+    job.delete()
+    return render(request,"delete.html")

@@ -20,7 +20,7 @@
                               <p class="card-text">{{ jobs.Company }}</p>
                               <p class="card-text">{{ jobs.Skills_required }}</p>
                               <button class="btn btn-success"><a href="/update/{{jobs.sno}}/{{ jobs.Company }}/{{jobs.Job_title}}/{{jobs.Skills_required}}/{{jobs.Job_type}}" class="text-light">Update</a></button>
-                              <button class="btn btn-danger"><a href="/delete" class="text-light">Delete</a></button>
+                              <button class="btn btn-danger"><a href="/delete/{{jobs.sno}}" class="text-light">Delete</a></button>
                           </div>
                       </div>
                   </div>
