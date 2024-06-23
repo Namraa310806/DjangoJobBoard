@@ -72,9 +72,6 @@ footer a:hover {
               <li class="nav-item">
                 <a class="nav-link" href="/jobs">Jobs</a>
               </li>
-              <li class="nav-item">
-                <a class="nav-link" href="/form">Form</a>
-              </li>
             </ul>
           </div>
         </div>
@@ -93,37 +90,19 @@ footer a:hover {
         <div class="container">
             <h2 class="text-center pb-4">Featured Jobs</h2>
             <div class="row">
-                <div class="col-md-4 ">
-                    <div class="card">
-                        <img src="job1.jpg" class="card-img-top" alt="Job Image">
-                        <div class="card-body">
-                            <h5 class="card-title">Software Engineer</h5>
-                            <p class="card-text">Google</p>
-                            <a href="/form" class="btn btn-primary">More Offers</a>
+                {% for jobs in job %}
+                    <div class="col-md-4">
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <h2 class="card-title">{{ jobs.Job_title }}</h2>
+                                <p class="card-text">{{ jobs.Company }}</p>
+                                <p class="card-text">{{ jobs.Skills_required }}</p>
+                                <a href="/form/{{jobs.Company}}/{{jobs.Job_title}}/{{jobs.sno}}" class="btn btn-primary">Apply Now</a>
+                            </div>
                         </div>
                     </div>
+                {% endfor %}
                 </div>
-                <div class="col-md-4 mb-4">
-                    <div class="card">
-                        <img src="job2.jpg" class="card-img-top" alt="Job Image">
-                        <div class="card-body">
-                            <h5 class="card-title">Product Manager</h5>
-                            <p class="card-text">Facebook</p>
-                            <a href="/form" class="btn btn-primary">More Offers</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 mb-4">
-                    <div class="card">
-                        <img src="job3.jpg" class="card-img-top" alt="Job Image">
-                        <div class="card-body">
-                            <h5 class="card-title">UI/UX Designer</h5>
-                            <p class="card-text">Apple</p>
-                            <a href="/form" class="btn btn-primary">More Offers</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
     </section>
 

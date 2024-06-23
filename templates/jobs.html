@@ -29,9 +29,6 @@
               <li class="nav-item">
                 <a class="nav-link active" href="/jobs">Jobs</a>
               </li>
-              <li class="nav-item">
-                <a class="nav-link" href="/form">Form</a>
-              </li>
             </ul>
             <form class="d-flex" role="search">
               <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
@@ -40,23 +37,7 @@
           </div>
         </div>
       </nav>
-      <h1 class="text-center my-3">Jobs List</h1><div class="container">
-      <table claaa="table table-bordered h-100 w-100"><thead>
-        <tr class="py-2 px-2"><th>Company</th><th>Job_title</th><th>Skill_required</th><th>Job_type</th><th>Apply</th></tr></thead>
-        <tbody>
-          {% for jobs in job %} 
-            <tr class="py-2 px-2">
-              <td>{{jobs.Company}}</td>
-              <td>{{jobs.Job_title}}</td>
-              <td>{{jobs.Skills_required}}</td>
-              <td>{{jobs.Job_type}}</td>
-              <td><button class="btn btn-success"><a href="/form" class="text-light">Apply</a></button></td>
-            </tr>
-            {% endfor %}
-          </tbody>
-          
-
-      </table></div>
+      <h1 class="text-center my-3">Jobs List</h1>
       <div class="container mt-4">
       <div class="row">
         {% for jobs in job %}
@@ -66,7 +47,7 @@
                         <h5 class="card-title">{{ jobs.Job_title }}</h5>
                         <p class="card-text">{{ jobs.Company }}</p>
                         <p class="card-text">{{ jobs.Skills_required }}</p>
-                        <a href="/jobs/{{jobs.Company}}" class="btn btn-primary">More Offers</a>
+                        <a href="/jobs/{{jobs.Job_title}}" class="btn btn-primary">More Offers</a>
                     </div>
                 </div>
             </div>

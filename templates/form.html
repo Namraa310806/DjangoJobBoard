@@ -22,9 +22,6 @@
               <li class="nav-item">
                 <a class="nav-link" href="/jobs">Jobs</a>
               </li>
-              <li class="nav-item">
-                <a class="nav-link active" href="/form">Form</a>
-              </li>
             </ul>
           </div>
         </div>
@@ -37,7 +34,7 @@
       {% endif %}
       <div class="container">
         <div class="application-form">
-            <h2 class="text-center form-title mt-2">Job Application Form</h2>
+            <h2 class="text-center form-title mt-2">Job Application Form For {{Company}}</h2>
             <form method="post">
               {% csrf_token %}
                 <div class="form-group">
@@ -48,13 +45,14 @@
                     <label for="email">Email address</label>
                     <input type="email" class="form-control" name="email" id="email" placeholder="Enter your email">
                 </div>
+
                 <div class="form-group">
                     <label for="phone">Phone Number</label>
                     <input type="tel" class="form-control" name="phone" id="phone" placeholder="Enter your phone number">
                 </div>
                 <div class="form-group">
                     <label for="position">Position Applied For</label>
-                    <input type="text" class="form-control" name="position" id="position" placeholder="Enter the job title">
+                    <input type="text" class="form-control" name="position" value="{{pos}}" readonly>
                 </div>
                 <div class="form-group">
                     <label for="resume">Upload Resume</label>
@@ -68,7 +66,7 @@
                     <label for="linkedin">LinkedIn Profile</label>
                     <input type="url" class="form-control" name="linkedin" id="linkedin" placeholder="Enter your LinkedIn profile URL">
                 </div>
-                <button type="submit" class="btn btn-primary btn-block">Submit Application</button>
+                <button type="submit" class="btn btn-primary btn-block mt-2">Submit Application</button>
             </form>
         </div>
     </div>

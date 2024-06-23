@@ -22,6 +22,8 @@ class Application(models.Model):
     cover_letter = models.TextField()
     linkedin = models.URLField(blank=True, null=True)
     submitted_at = models.DateTimeField(auto_now_add=True)
+    job = models.ForeignKey(Job, on_delete=models.CASCADE, default=1)  # Set a default value
+
 
     def __str__(self):
         return f"{self.full_name} - {self.position}"
