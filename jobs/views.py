@@ -44,5 +44,9 @@ def companyform(request):
         context={'success':True}
     return render(request,"companyform.html",context)
 
+def company(request):
+    return render (request,"company.html")
 
 
+def list(request,cmp):
+    return render(request,"jobsCompany.html",{'cmp':cmp})
