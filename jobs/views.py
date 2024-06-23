@@ -43,3 +43,6 @@ def companyform(request):
         j1.save()
         context={'success':True}
     return render(request,"companyform.html",context)
+
+
+
