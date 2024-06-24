@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Applications List</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .card {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="mb-4">Applications List</h1>
+        <div class="row">
+            {% for application in apps %}
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ application.full_name }}</h5>
+                            <h6 class="card-subtitle mb-2 text-muted">{{ application.position }}</h6>
+                            <p class="card-text"><strong>Email:</strong> {{ application.email }}</p>
+                            <p class="card-text"><strong>Phone:</strong> {{ application.phone }}</p>
+                            <p class="card-text"><strong>Job ID:</strong> {{ application.job }}</p>
+                            <p class="card-text"><strong>Submitted At:</strong> {{ application.submitted_at }}</p>
+                            <p class="card-text"><strong>Cover Letter:</strong> {{ application.cover_letter }}</p>
+                            <a href="{{ application.resume.url }}" class="card-link">Download Resume</a>
+                            {% if application.linkedin %}
+                                <a href="{{ application.linkedin }}" class="card-link">LinkedIn Profile</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>
+

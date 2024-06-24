@@ -67,3 +67,7 @@ def delete(request,no):
     job = get_object_or_404(Job, sno=no)
     job.delete()
     return render(request,"delete.html")
+
+def app(request,no):
+    apps=Application.objects.filter(job=no)
+    return render(request,"application.html",{'apps':apps})

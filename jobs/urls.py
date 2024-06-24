@@ -11,6 +11,7 @@ urlpatterns = [
     path('company/',views.company),
     path('job/list/<str:cmp>',views.list),
     path('update/<int:no>/<str:cmp>/<str:tit>/<str:skills>/<str:type>/',views.update),
-    path('delete/<int:no>/',views.delete)
+    path('delete/<int:no>/',views.delete),
+    path('applications/<int:no>/',views.app)
 
 ]
