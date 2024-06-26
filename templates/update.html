@@ -6,6 +6,53 @@
     <title>Update Job</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+        }
+
+        .navbar {
+            margin-bottom: 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            margin: 50px auto;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .form-group label {
+            font-weight: bold;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+
+        .alert {
+            position: relative;
+        }
+
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
     </style>
 </head>
 <body>
@@ -28,12 +75,12 @@
         </div>
     </nav>
 
-    <div class="container mt-5">
+    <div class="container">
         <h2 class="mb-4 text-center">Update Job</h2>
         {% if success %}
             <div class="alert alert-success" role="alert">
                 Job Updated Successfully
-                <a href="/job/list/{{ cmp }}" class="btn btn-primary fixed-left-btn">Go to Job List</a>
+                <a href="/job/list/{{ cmp }}" class="btn btn-primary">Go to Job List</a>
             </div>
         {% else %}
             <form method="post">
@@ -58,5 +105,7 @@
             </form>
         {% endif %}
     </div>
+
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
