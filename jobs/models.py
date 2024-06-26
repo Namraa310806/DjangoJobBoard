@@ -26,3 +26,21 @@ class Application(models.Model):
 
     def __str__(self):
         return f"{self.full_name} - {self.position}"
+
+
+class Company(models.Model):
+    name = models.CharField(max_length=100)
+    email = models.EmailField()
+    password = models.CharField(max_length=20)
+
+    def __str__(self):
+        return self.name
+
+
+class User(models.Model):
+    name = models.CharField(max_length=100)
+    email = models.EmailField()
+    password = models.CharField(max_length=20)
+
+    def __str__(self):
+        return self.name

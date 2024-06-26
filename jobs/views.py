@@ -1,8 +1,10 @@
+from pyexpat.errors import messages
 from django.http import HttpResponse
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, redirect, render
+from django.contrib.auth.hashers import check_password
 
 
-from jobs.models import Job,Application
+from jobs.models import Company, Job,Application, User
 
 # Create your views here.
 def home(request):
@@ -32,20 +34,18 @@ def detail(request,slug):
     job=Job.objects.filter(Job_title=slug)
     return render(request,'detail.html',{'job':job, 'slug':slug})
 
-def companyform(request):
-    context={'success':False}
+def createJob(request,cmp):
+    context={'success':False,'cmp':cmp}
     if request.method=="POST":
         company=request.POST['company']
         job_title=request.POST['job_title']
         skills_required=request.POST['skills_required']
         job_type=request.POST['job_type']
-        j1= Job(Company=company,Job_title=job_title,Skills_required=skills_required,Job_type=job_type)
+        j1= Job(Company=cmp,Job_title=job_title,Skills_required=skills_required,Job_type=job_type)
         j1.save()
-        context={'success':True}
-    return render(request,"companyform.html",context)
+        context={'success':True,'cmp':cmp}
+    return render(request,"jobCreate.html",context)
 
-def company(request):
-    return render (request,"company.html")
 
 
 def list(request,cmp):
@@ -53,6 +53,7 @@ def list(request,cmp):
     return render(request,"jobsCompany.html",{'cmp':cmp,'job':jobs})
 
 def update(request,no,cmp,tit,skills,type):
+    success = False
     if request.method=="POST":
         job_instance = Job.objects.get(sno=no)
         job_instance.Company=request.POST['company']
@@ -60,14 +61,110 @@ def update(request,no,cmp,tit,skills,type):
         job_instance.Skills_required=request.POST['skills_required']
         job_instance.Job_type=request.POST['job_type']
         job_instance.save();
-    content={'no':no,'cmp':cmp,'tit':tit,'skills':skills,'type':type}
+        success=True
+    content={'no':no,'cmp':cmp,'tit':tit,'skills':skills,'type':type,'success':success}
     return render (request,"update.html",content)
 
-def delete(request,no):
+def delete(request,no,cmp):
     job = get_object_or_404(Job, sno=no)
     job.delete()
-    return render(request,"delete.html")
+    return redirect('/job/list/'+cmp)
 
 def app(request,no):
     apps=Application.objects.filter(job=no)
     return render(request,"application.html",{'apps':apps})
+
+def userLogin(request):
+    error = None
+
+    if request.method == "POST":
+        name = request.POST['name']
+        password = request.POST['password']
+
+        try:
+            user = User.objects.get(name=name)
+            if password == user.password:
+                # Successful login
+                return redirect('/home')
+            else:
+                # Incorrect password
+                error = "Incorrect password."
+        except User.DoesNotExist:
+            # User not found
+            error = "User not registered. Please create an account."
+
+    return render(request, 'userLogin.html', {'error': error})
+
+def companyLogin(request):
+    error = None
+
+    if request.method == "POST":
+        name = request.POST['name']
+        password = request.POST['password']
+
+        try:
+            company = Company.objects.get(name=name)
+            if password == company.password:
+                # Successful login
+                return redirect('/job/list/'+ company.name)
+            else:
+                # Incorrect password
+                error = "Incorrect password."
+        except Company.DoesNotExist:
+            # Company not found
+            error = "Company not registered. Please create an account."
+
+    return render(request, 'companylogin.html', {'error': error})
+
+def userReg(request):
+    error = None
+    if request.method == 'POST':
+        # Retrieve data from POST request
+        name = request.POST.get('name')
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+
+        # Basic validation (you should add more robust validation as needed)
+        if not name or not email or not password:
+            error="Please fill in all fields."
+            return render(request, 'userRegister.html',{'error':error})
+
+        # Check if user with the same email exists
+        if User.objects.filter(email=email).exists():
+            error="User with this email already exists."
+            return render(request, 'userRegister.html',{'error':error})
+
+        # Create new user
+        new_user = User.objects.create(name=name, email=email, password=password)
+        new_user.save()
+        # Optionally, you might want to redirect to login page or show a success message
+        #messages.success(request, 'User registered successfully!')
+        return redirect('/')  # Redirect to login page after successful registration
+
+    return render (request,"userRegister.html",{'error':error})
+
+def companyReg(request):
+    error = None
+    if request.method == 'POST':
+        # Retrieve data from POST request
+        name = request.POST.get('name')
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+
+        # Basic validation (you should add more robust validation as needed)
+        if not name or not email or not password:
+            error="Please fill in all fields."
+            return render(request, 'companyRegister.html',{'error':error})
+
+        # Check if company with the same email exists
+        if Company.objects.filter(email=email).exists():
+            error="Company with this email already exists."
+            return render(request, 'companyRegister.html',{'error':error})
+
+        # Create new company
+        new_company = Company.objects.create(name=name, email=email, password=password)
+        new_company.save()
+        # Optionally, you might want to redirect to login page or show a success message
+        #messages.success(request, 'Company registered successfully!')
+        return redirect('/companyLogin')
+    return render (request,"companyRegister.html",{'error':error})
