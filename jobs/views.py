@@ -158,3 +158,33 @@ def companyReg(request):
 
 def companyHome(request,cmp):
     return render(request,"companyHome.html",{'cmp':cmp})
+
+def forgotPasswordUser(request):
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        email = request.POST.get('email')
+        new_password = request.POST.get('new_password')
+        
+        try:
+            user = User.objects.get(name=name, email=email)
+            user.password = new_password
+            user.save()
+            return render(request, 'forgotPasswordUser.html', {'success': 'Password has been reset successfully!'})
+        except User.DoesNotExist:
+            return render(request, 'forgotPasswordUser.html', {'error': 'User with provided details does not exist.'})
+    return render(request,"forgotPasswordUser.html")
+
+def forgotPasswordCompany(request):
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        email = request.POST.get('email')
+        new_password = request.POST.get('new_password')
+        
+        try:
+            cmp = Company.objects.get(name=name, email=email)
+            cmp.password = new_password
+            cmp.save()
+            return render(request, 'forgotPasswordCompany.html', {'success': 'Password has been reset successfully!'})
+        except User.DoesNotExist:
+            return render(request, 'forgotPasswordCompany.html', {'error': 'User with provided details does not exist.'})
+    return render(request,"forgotPasswordCompany.html")

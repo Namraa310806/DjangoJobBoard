@@ -93,6 +93,7 @@
         <h2>User Login</h2>
         {% if error %}
             <p class="error-message">{{ error }}</p>
+            <a href="/forgot-password/user" class="btn btn-secondary">Forgot Password?</a>
         {% endif %}
         <form method="post">
             {% csrf_token %}
