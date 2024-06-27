@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Company Home</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+        }
+
+        .navbar {
+            background-color: #343a40;
+        }
+
+        .navbar-brand,
+        .nav-link {
+            color: #fff !important;
+        }
+
+        .hero-section {
+            background: url('https://img.freepik.com/free-photo/crop-stationery-laptop-white_23-2147777911.jpg?size=626&ext=jpg&ga=GA1.1.48135744.1719297313&semt=ais_user') no-repeat center center;
+            background-size: cover;
+            height: 600px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: black;
+            text-align: center;
+        }
+
+        .hero-section h1 {
+            font-size: 4rem;
+            animation: fadeInDown 2s;
+        }
+
+        .hero-section p {
+            font-size: 1.5rem;
+            animation: fadeInUp 2s;
+        }
+
+        .features {
+            margin: 50px 0;
+            text-align: center;
+        }
+
+        .feature-item {
+            margin: 20px 0;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+
+        .feature-item:hover {
+            transform: translateY(-10px);
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/companyHome">Company</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-it-autoem">
+                        <a class="nav-link" href="/companyHome/{{cmp}}">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/job/list/{{ cmp }}">Your Jobs</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/job/create/{{ cmp }}">Create Job</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="hero-section">
+        <div class="container">
+            <h1>Welcome to Our Site</h1>
+            <p>Your success is our priority</p>
+        </div>
+    </div>
+
+    <div class="container features">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="feature-item">
+                    <h3>Best Employees</h3>
+                    <p>Discover top talent and manage your job listings seamlessly with our platform.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="feature-item">
+                    <h3>User-friendly</h3>
+                    <p>Streamline your recruitment process with our user-friendly tools and features.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="feature-item">
+                    <h3>Make best choice</h3>
+                    <p>Gain insights and analytics to make informed hiring decisions.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>

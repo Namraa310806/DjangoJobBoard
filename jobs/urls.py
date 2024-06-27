@@ -4,10 +4,11 @@ from jobs import views
 
 urlpatterns = [
     path('',views.userLogin),
+    path('companyHome/<str:cmp>',views.companyHome),
     path('companyLogin/',views.companyLogin),
     path("userReg/",views.userReg),
     path("companyReg/",views.companyReg),
-    path('home/',views.home),
+    path('userHome/',views.userHome),
     path('jobs/',views.jobs),
     path('job/apply/<str:com>/<str:tit>/<int:no>',views.userform),
     path('jobs/<str:slug>',views.detail),
