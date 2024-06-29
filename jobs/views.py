@@ -1,7 +1,8 @@
 from pyexpat.errors import messages
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
-from django.contrib.auth.hashers import check_password
+from django.contrib.auth.hashers import check_password,make_password
+
 
 
 from jobs.models import Company, Job,Application, User
@@ -86,7 +87,7 @@ def userLogin(request):
 
         try:
             user = User.objects.get(name=name)
-            if password == user.password: 
+            if check_password(password, user.password): 
                 return redirect('/userHome')
             else:
                 error = "Incorrect password."
@@ -104,7 +105,7 @@ def companyLogin(request):
 
         try:
             company = Company.objects.get(name=name)
-            if password == company.password:
+            if check_password(password, company.password):
                 return redirect('/companyHome/'+ company.name)
             else:
                 error = "Incorrect password."
@@ -128,8 +129,9 @@ def userReg(request):
         if User.objects.filter(email=email).exists():
             error="User with this email already exists."
             return render(request, 'userRegister.html',{'error':error})
-
-        new_user = User.objects.create(name=name, email=email, password=password)
+        
+        encrypted_password = make_password(password)
+        new_user = User.objects.create(name=name, email=email, password=encrypted_password)
         new_user.save()
 
         return redirect('/') 
@@ -151,7 +153,8 @@ def companyReg(request):
             error="Company with this email already exists."
             return render(request, 'companyRegister.html',{'error':error})
 
-        new_company = Company.objects.create(name=name, email=email, password=password)
+        encrypted_password = make_password(password)
+        new_company = Company.objects.create(name=name, email=email, password=encrypted_password)
         new_company.save()
         return redirect('/companyLogin')
     return render (request,"companyRegister.html",{'error':error})
