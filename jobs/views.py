@@ -1,4 +1,8 @@
+from email.message import EmailMessage
 from pyexpat.errors import messages
+from django.contrib import messages
+import random
+import smtplib
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth.hashers import check_password,make_password
@@ -163,31 +167,129 @@ def companyHome(request,cmp):
     return render(request,"companyHome.html",{'cmp':cmp})
 
 def forgotPasswordUser(request):
+    content = {'verifyOtp': False, 'resetPass': False}
+    name = request.POST.get('name')
+    email = request.POST.get('email')
+    content['name'] = name
+    content['email'] = email
     if request.method == 'POST':
-        name = request.POST.get('name')
-        email = request.POST.get('email')
-        new_password = request.POST.get('new_password')
+        submit = request.POST.get('submit')
         
-        try:
-            user = User.objects.get(name=name, email=email)
-            user.password = new_password
-            user.save()
-            return render(request, 'forgotPasswordUser.html', {'success': 'Password has been reset successfully!'})
-        except User.DoesNotExist:
-            return render(request, 'forgotPasswordUser.html', {'error': 'User with provided details does not exist.'})
-    return render(request,"forgotPasswordUser.html")
+        if submit == 'Send Otp':
+            otp = random.randint(100000, 999999)
+            request.session['otp'] = otp
+            request.session['email'] = email
+
+            server = smtplib.SMTP('smtp.gmail.com', 587)
+            server.starttls()
+            from_mail = 'patelnamraa88@gmail.com'
+            server.login(from_mail, 'rrkagljarfrgdrbj')
+            to_mail = email
+
+            msg = EmailMessage()
+            msg['Subject'] = "Otp Verification"
+            msg['from'] = from_mail
+            msg['to'] = to_mail
+            msg.set_content("Your otp is: " + str(otp))
+
+            server.send_message(msg)
+            server.quit()
+
+            
+            content['verifyOtp'] = True
+            return render(request, "forgotPasswordUser.html", content)
+        
+        if submit == 'Verify Otp':
+            entered_otp = int(request.POST['otp'])
+            session_otp = int(request.session.get('otp', 0))
+            
+            if entered_otp == session_otp:
+                content['resetPass'] = True
+                content['verifyOtp'] = False
+                return render(request, "forgotPasswordUser.html", content)
+            else:
+                content['error'] = "Incorrect OTP. Please try again."
+                content['verifyOtp'] = True
+                return render(request, "forgotPasswordUser.html", content)
+        
+        if submit == 'Reset Password':
+            email = request.session.get('email')
+            n_pass = request.POST['new_password']
+            c_pass = request.POST['confirm_password']
+            
+            if n_pass == c_pass:
+                user = User.objects.get(email=email)
+                user.password = make_password(n_pass)
+                user.save()
+                messages.success(request, "Password reset successfully.")
+                return redirect('/')
+            else:
+                content['error'] = "Passwords do not match."
+                content['resetPass'] = True
+                return render(request, "forgotPasswordUser.html", content)
+    
+    return render(request, "forgotPasswordUser.html", content)
 
 def forgotPasswordCompany(request):
+    content = {'verifyOtp': False, 'resetPass': False}
+    name = request.POST.get('name')
+    email = request.POST.get('email')
+    content['name'] = name
+    content['email'] = email
     if request.method == 'POST':
-        name = request.POST.get('name')
-        email = request.POST.get('email')
-        new_password = request.POST.get('new_password')
+        submit = request.POST.get('submit')
         
-        try:
-            cmp = Company.objects.get(name=name, email=email)
-            cmp.password = new_password
-            cmp.save()
-            return render(request, 'forgotPasswordCompany.html', {'success': 'Password has been reset successfully!'})
-        except User.DoesNotExist:
-            return render(request, 'forgotPasswordCompany.html', {'error': 'User with provided details does not exist.'})
-    return render(request,"forgotPasswordCompany.html")
+        if submit == 'Send Otp':
+            otp = random.randint(100000, 999999)
+            request.session['otp'] = otp
+            request.session['email'] = email
+
+            server = smtplib.SMTP('smtp.gmail.com', 587)
+            server.starttls()
+            from_mail = 'patelnamraa88@gmail.com'
+            server.login(from_mail, 'rrkagljarfrgdrbj')
+            to_mail = email
+
+            msg = EmailMessage()
+            msg['Subject'] = "Otp Verification"
+            msg['from'] = from_mail
+            msg['to'] = to_mail
+            msg.set_content("Your otp is: " + str(otp))
+
+            server.send_message(msg)
+            server.quit()
+
+            
+            content['verifyOtp'] = True
+            return render(request, "forgotPasswordCompany.html", content)
+        
+        if submit == 'Verify Otp':
+            entered_otp = int(request.POST['otp'])
+            session_otp = int(request.session.get('otp', 0))
+            
+            if entered_otp == session_otp:
+                content['resetPass'] = True
+                content['verifyOtp'] = False
+                return render(request, "forgotPasswordCompany.html", content)
+            else:
+                content['error'] = "Incorrect OTP. Please try again."
+                content['verifyOtp'] = True
+                return render(request, "forgotPasswordCompany.html", content)
+        
+        if submit == 'Reset Password':
+            email = request.session.get('email')
+            n_pass = request.POST['new_password']
+            c_pass = request.POST['confirm_password']
+            
+            if n_pass == c_pass:
+                user = Company.objects.get(email=email)
+                user.password = make_password(n_pass)
+                user.save()
+                messages.success(request, "Password reset successfully.")
+                return redirect('/')
+            else:
+                content['error'] = "Passwords do not match."
+                content['resetPass'] = True
+                return render(request, "forgotPasswordCompany.html", content)
+    
+    return render(request, "forgotPasswordCompany.html", content)
