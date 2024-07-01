@@ -17,9 +17,13 @@ def userHome(request):
     return render(request,"userHome.html",{'job':three_jobs})
 
 def jobs(request):
-    job=Job.objects.all()
-    context = {'job':job}
-    return render(request,"jobs.html",context)
+    query = request.POST.get('q')
+    if query:
+        jobs = Job.objects.filter(Job_title__icontains=query)  # You can modify this line to search based on different fields
+    else:
+        jobs = Job.objects.all()
+    content = {'jobs':jobs}
+    return render(request,"jobs.html",content)
 
 def userform(request,com,tit,no):
     context={'success':False,'Company':com,'pos':tit}
